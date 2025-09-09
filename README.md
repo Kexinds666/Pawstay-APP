@@ -12,28 +12,176 @@ PawStay is a pet-focused social media platform that offers pet-sitting services 
 - Payments with Stripe Connect
 - IaC with Terraform or Serverless Framework
 - CI/CD with GitHub Actions and Fastlane
-.
-├─ apps/
-│  └─ mobile/                  # React Native app (TypeScript)
-│     ├─ src/app/screens/...   # Auth, Listings, Booking, Chat (examples)
-│     ├─ src/components/...    # ListingCard, etc.
-│     ├─ fastlane/             # iOS/Android lanes (stubs)
-│     ├─ ios/ android/         # Native folders (placeholders in scaffold)
-│     └─ app.json, metro.config.js, tsconfig.json, ...
-├─ packages/
-│  ├─ ui/                      # Design system (Theme + primitives)
-│  ├─ models/                  # Shared TS types
-│  └─ validation/              # zod schemas
-├─ services/
-│  ├─ api/                     # Lambda handlers (Stripe/S3/OpenSearch, etc.)
-│  └─ graphql/                 # AppSync schema + resolver stubs
-├─ infra/                      # Terraform modules (S3/DynamoDB implemented; others scaffolded)
-│  ├─ modules/{s3,dynamodb,cognito,appsync,opensearch,lambdas,apigw,...}
-│  └─ envs/{dev,staging,prod}.tfvars
-├─ .github/workflows/          # CI examples
-├─ config/tokens/              # Figma tokens + resolved preview
-├─ scripts/                    # codegen/seed/smoke (stubs)
-└─ Root configs: pnpm, Turbo, TS, ESLint/Prettier, etc.
+```
+pawstay/
+├── README.md
+├── .editorconfig
+├── .gitignore
+├── .nvmrc
+├── .npmrc
+├── pnpm-workspace.yaml
+├── package.json
+├── turbo.json
+├── tsconfig.base.json
+├── .prettierrc
+├── .eslintrc.cjs
+├── .env.example
+├── apps/
+│   └── mobile/
+│       ├── app.json
+│       ├── babel.config.js
+│       ├── metro.config.js
+│       ├── tsconfig.json
+│       ├── package.json
+│       ├── index.js
+│       ├── ios/
+│       ├── android/
+│       ├── fastlane/
+│       │   ├── Appfile
+│       │   ├── Fastfile
+│       │   └── Matchfile
+│       ├── assets/
+│       └── src/
+│           ├── app/
+│           │   ├── navigation/
+│           │   │   ├── RootNavigator.tsx
+│           │   │   └── linking.ts
+│           │   └── screens/
+│           │       ├── Auth/
+│           │       │   ├── SignInScreen.tsx
+│           │       │   ├── SignUpScreen.tsx
+│           │       │   └── ForgotPasswordScreen.tsx
+│           │       ├── Listings/
+│           │       │   ├── BrowseListingsScreen.tsx
+│           │       │   ├── ListingDetailScreen.tsx
+│           │       │   └── CreateListingScreen.tsx
+│           │       ├── Booking/
+│           │       │   ├── CheckoutScreen.tsx
+│           │       │   └── BookingsScreen.tsx
+│           │       ├── Chat/
+│           │       │   ├── ChatListScreen.tsx
+│           │       │   └── ChatRoomScreen.tsx
+│           │       └── Profile/
+│           │           ├── ProfileScreen.tsx
+│           │           └── SettingsScreen.tsx
+│           ├── components/
+│           │   ├── ListingCard.tsx
+│           │   ├── MessageBubble.tsx
+│           │   └── MapPreview.tsx
+│           ├── graphql/
+│           │   ├── queries.ts
+│           │   ├── mutations.ts
+│           │   └── subscriptions.ts
+│           ├── lib/
+│           │   ├── aws.ts
+│           │   ├── apolloClient.ts
+│           │   ├── stripe.ts
+│           │   ├── storage.ts
+│           │   ├── search.ts
+│           │   └── env.ts
+│           ├── state/
+│           │   ├── auth.store.ts
+│           │   ├── chat.store.ts
+│           │   └── listings.store.ts
+│           ├── styles/
+│           ├── utils/
+│           └── types/
+├── packages/
+│   ├── ui/
+│   │   ├── package.json
+│   │   └── src/
+│   │       ├── index.tsx
+│   │       └── theme.ts
+│   ├── models/
+│   │   ├── package.json
+│   │   └── src/
+│   │       └── index.ts
+│   └── validation/
+│       ├── package.json
+│       └── src/
+│           └── index.ts
+├── services/
+│   ├── api/
+│   │   ├── package.json
+│   │   ├── tsconfig.json
+│   │   └── src/
+│   │       ├── bookings/
+│   │       │   ├── createBooking.ts
+│   │       │   ├── capturePayment.ts
+│   │       │   └── refundPayment.ts
+│   │       ├── listings/
+│   │       │   ├── createListing.ts
+│   │       │   ├── updateListing.ts
+│   │       │   └── signS3UploadUrl.ts
+│   │       ├── search/
+│   │       │   └── searchListings.ts
+│   │       ├── users/
+│   │       │   └── me.ts
+│   │       ├── webhooks/
+│   │       │   └── stripe.ts
+│   │       └── common/
+│   │           ├── auth.ts
+│   │           ├── ddb.ts
+│   │           ├── os.ts
+│   │           ├── s3.ts
+│   │           └── response.ts
+│   └── graphql/
+│       ├── schema.graphql
+│       ├── mapping-templates/
+│       └── resolvers/
+│           ├── Query.listings.ts
+│           ├── Mutation.createMessage.ts
+│           └── Subscription.onMessage.ts
+├── infra/
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   ├── envs/
+│   │   ├── dev.tfvars
+│   │   ├── staging.tfvars
+│   │   └── prod.tfvars
+│   ├── modules/
+│   │   ├── s3/
+│   │   │   └── main.tf
+│   │   ├── dynamodb/
+│   │   │   └── main.tf
+│   │   ├── cognito/
+│   │   │   └── main.tf
+│   │   ├── appsync/
+│   │   │   └── main.tf
+│   │   ├── opensearch/
+│   │   │   └── main.tf
+│   │   ├── lambdas/
+│   │   │   └── main.tf
+│   │   ├── apigw/
+│   │   │   └── main.tf
+│   │   ├── streams/
+│   │   │   └── main.tf
+│   │   └── iam/
+│   │       └── main.tf
+│   └── files/
+│       ├── graphql/
+│       │   └── schema.graphql
+│       └── opensearch/
+│           └── listings-mapping.json
+├── .github/
+│   └── workflows/
+│       ├── mobile-ci.yml
+│       ├── mobile-release.yml
+│       ├── services-ci.yml
+│       └── terraform-deploy.yml
+├── config/
+│   ├── codegen.yml
+│   ├── opensearch/
+│   │   └── listings-mapping.json
+│   └── tokens/
+│       ├── design-tokens.tokens.json
+│       └── resolved-theme.json
+└── scripts/
+    ├── generate-graphql.ts
+    ├── seed-dev-data.ts
+    └── smoke-tests.ts
+```
 Tech Stack
 Runtime/Build: Node 18+, pnpm workspaces, Turborepo (optional cache/pipelines)
 
