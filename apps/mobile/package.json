@@ -1,0 +1,23 @@
+{
+  "name": "mobile",
+  "private": true,
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-native start",
+    "ios": "react-native run-ios",
+    "android": "react-native run-android"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-native": "0.80.5",
+    "@apollo/client": "^3.11.8",
+    "aws-amplify": "^6.6.7",
+    "@aws-amplify/auth": "^6.0.36",
+    "@stripe/stripe-react-native": "^0.39.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-native": "^0.73.0"
+  }
+}

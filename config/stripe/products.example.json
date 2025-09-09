@@ -1,0 +1,6 @@
+{
+  "products": [
+    { "name": "Overnight Stay", "default_price": 10000, "currency": "usd" },
+    { "name": "Day Care", "default_price": 6000, "currency": "usd" }
+  ]
+}

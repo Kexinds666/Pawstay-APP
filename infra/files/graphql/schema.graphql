@@ -1,0 +1,30 @@
+type Listing {
+  id: ID!
+  ownerId: ID!
+  title: String!
+  coverUrl: String
+  pricePerNight: Int!
+  locationText: String
+  rating: Float
+  location: AWSJSON
+}
+
+type Message {
+  id: ID!
+  chatId: ID!
+  senderId: ID!
+  text: String!
+  createdAt: AWSDateTime!
+}
+
+type Query {
+  listingsNearby(lat: Float!, lon: Float!, km: Int!): [Listing!]!
+}
+
+type Mutation {
+  createMessage(chatId: ID!, text: String!): Message!
+}
+
+type Subscription {
+  onMessage(chatId: ID!): Message! @aws_subscribe(mutations: ["createMessage"])
+}

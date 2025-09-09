@@ -1,0 +1,4 @@
+# fastlane Appfile (stub)
+app_identifier("com.pawstay.app")
+apple_id("you@example.com")
+team_id("TEAMID1234")
